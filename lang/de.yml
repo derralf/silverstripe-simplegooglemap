@@ -1,0 +1,10 @@
+de:
+  Derralf\SimpleGoogleMap:
+    InfoWindowDirectionsLabelDirections: 'Anfahrt'
+    InfoWindowDirectionsLabelCalculate: 'Route berechnen'
+    InfoWindowDirectionsLabelTo: 'Hierher'
+    InfoWindowDirectionsLabelFrom: 'Von hier'
+    InfoWindowDirectionsLabelButton: 'Wegbeschreibung anzeigen'
+    InfoWindowDirectionsStart: 'Start-Adresse'
+    InfoWindowDirectionsDesination: 'Ziel-Adresse'
+
