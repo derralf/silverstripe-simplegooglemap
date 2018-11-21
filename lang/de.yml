@@ -7,4 +7,5 @@ de:
     InfoWindowDirectionsLabelButton: 'Wegbeschreibung anzeigen'
     InfoWindowDirectionsStart: 'Start-Adresse'
     InfoWindowDirectionsDesination: 'Ziel-Adresse'
+    GoogleMapsConfirm: '<p>Diese Website nutzt Google Maps - <u>klicken Sie hier</u>, um es permanent zu aktivieren. <br>Sie stimmen zu, dass mit der Nutzung Daten an Google übertragen werden. Hinweis: Sie können Ihre Einwilligung jederzeit für die Zukunft widerrufen, indem Sie den Cookie ss_googlemaps_allow löschen.<br>Detaillierte Informationen zum Umgang mit Nutzerdaten finden Sie in unserer Datenschutzerklärung.</p>'
 

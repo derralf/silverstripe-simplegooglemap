@@ -31,27 +31,10 @@ class SimpleGMap extends ViewableData {
 
     function display() {
 
+        $gmap_is_allowed = (isset($_COOKIE["ss_googlemaps_allow"])) ? true : false;
 
-
-        //$map_addresses = $this->config()->get('Adresses');;
         $map_addresses = $this->config()->get($this->addressList);
         $gmap_has_addresses = ($map_addresses) ? true : false;
-
-
-        $map_vars = new ArrayData([
-            'gmap_has_addresses' => $gmap_has_addresses,
-            'gmap_addresses' => json_encode($map_addresses),
-            'gmap_id'        => $this->name . '_SimpleGMap',
-            'width'          => $this->width . 'px',
-            'height'         => $this->height . 'px',
-            'gmap_zoomLevel'                              => $this->zoomLevel,
-            'gmap_openInfoWindow'                         => $this->openInfoWindow,
-            'gmap_zoomToBounds'                           => $this->zoomToBounds,
-            'gmap_useToFromInputs'                        => $this->useToFromInputs,
-        ]);
-
-        $map = $map_vars->renderWith('SimpleGoogleMap');
-
 
         // Requirements
 
@@ -72,19 +55,41 @@ class SimpleGMap extends ViewableData {
         if($api_version) $api_url_params['v'] = $api_version;
         if($api_key) $api_url_params['key'] = $api_key;
         $api_url .= http_build_query($api_url_params);
+
         //require maps api
-        if ($this->config()->get('include_maps_api')) {
+        if ($this->config()->get('include_maps_api') && $gmap_is_allowed) {
             Requirements::insertHeadTags(
                 '<script type="text/javascript" src="'
-                .'https://maps.google.com/maps/api/js'
-                .'?v=' . $api_version
-                .'&key='. $api_key
+                . $api_url
+                //.'https://maps.google.com/maps/api/js'
+                //.'?v=' . $api_version
+                //.'&key='. $api_key
                 .'"></script>'
                 , $uniquenessID = 'google_maps'
             );
         }
 
         Requirements::javascript('derralf/silverstripe-simplegooglemap:javascript/simplegooglemap.js');
+
+
+        $map_vars = new ArrayData([
+            'gmap_is_allowed'      => $gmap_is_allowed,
+            'gmap_api_url'         => $api_url,
+            'gmap_has_addresses'   => $gmap_has_addresses,
+            'gmap_addresses'       => json_encode($map_addresses),
+            'gmap_id'              => $this->name . '_SimpleGMap',
+            'width'                => $this->width . 'px',
+            'height'               => $this->height . 'px',
+            'gmap_zoomLevel'       => $this->zoomLevel,
+            'gmap_openInfoWindow'  => $this->openInfoWindow,
+            'gmap_zoomToBounds'    => $this->zoomToBounds,
+            'gmap_useToFromInputs' => $this->useToFromInputs,
+        ]);
+
+        $map = $map_vars->renderWith('SimpleGoogleMap');
+
+
+
 
 
 

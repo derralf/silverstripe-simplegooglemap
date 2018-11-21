@@ -7,5 +7,6 @@ en:
     InfoWindowDirectionsLabelButton: 'Show Directions'
     InfoWindowDirectionsStart: 'Start address'
     InfoWindowDirectionsDesination: 'Destination address'
+    GoogleMapsConfirm: '<p>This website uses Google Maps - <u>click here</u> to permanently activate it.<br>You agree with the transfer of your data to Google. Notice: You can withdraw your confirmation at any time for the future by deleting he cookie ss_googlemaps_allow.<br>In our privacy policy You''ll find further information about our way to deal with user data.</p>'
 
 
