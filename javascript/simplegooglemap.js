@@ -119,30 +119,48 @@ function initSimpleGoogleMap(mapContentOptions, mapCustomOptions) {
     function attachWindowHtml(marker, number) {
         var address = addresses[number];
 
-        html = ['<div class="gmapAddr" style="white-space: nowrap; margin-right: 15px">', getInfoicon(address.logourl),'<b>', address.name, '</b><br/>', address.street, '<br/> ' , address.zip,' ',address.city, '</div>'].join('');
+        //html = ['<div class="gmapAddr" style="white-space: nowrap; margin-right: 15px">', getInfoicon(address.logourl),'<b>', address.name, '</b><br/>', address.street, '<br/> ' , address.zip,' ',address.city, '</div>'].join('');
 
-        // if(use_to_from_inputs) {
-        //     to_htmls[number] = html;
-        //     to_htmls[number] += '<div class="gmapDir" style="white-space: nowrap; clear:both; margin-top:10px;">';
-        //     to_htmls[number] += '<form class="gmapDir" id="gmapDirTo" action="http://maps.google.com/maps" method="get" target="_blank">';
-        //     to_htmls[number] += '<div class="gmapDirHead" id="gmapDirHeadTo">' + labels.caclulate + ': <strong>' + labels.to + '</strong> - <a href="javascript:fromhere(' + number + ')">' + labels.from + '</a></div>';
-        //     to_htmls[number] += '<div class="gmapDirItem" id="gmapDirItemTo" style="margin-top:10px;">' + labels.start + ':<br><input type="text" size="25" maxlength="40" name="saddr" class="gmapTextBox" id="gmapDirSaddr" value="" onfocus="this.style.backgroundColor = \'#e0e0e0\';" onblur="this.style.backgroundColor = \'#ffffff\';" /></div>';
-        //     to_htmls[number] += '<div class="gmapDirBtns" id="gmapDirBtnsTo" style="margin-top:10px;"><input value="' + labels.button + '" type="submit" class="gmapDirButton" id="gmapDirButtonTo" /></div>';
-        //     to_htmls[number] += '<input type="hidden" name="daddr" value="' + formatAddressForMaps(address) + '" /><br></form>';
-        //     to_htmls[number] += '</div>';
-        //     from_htmls[number] = html;
-        //     from_htmls[number] += '<div class="gmapDir" style="white-space: nowrap; clear:both; margin-top:10px;">';
-        //     from_htmls[number] += '<form class="gmapDir" id="gmapDirFrom" action="http://maps.google.com/maps" method="get" target="_blank">';
-        //     from_htmls[number] += '<div class="gmapDirHead" id="gmapDirHeadFrom">' + labels.caclulate + ': <a href="javascript:tohere(' + number + ')">$gmap_infowindow_directions_label_to</a> - <strong>$gmap_infowindow_directions_label_from</strong></div>';
-        //     from_htmls[number] += '<div class="gmapDirItem" id="gmapDirItemFrom" style="margin-top:10px;">' + labels.destination + ':<br><input type="text" size="25" maxlength="40" name="saddr" class="gmapTextBox" id="gmapDirSaddr" value="" onfocus="this.style.backgroundColor = \'#e0e0e0\';" onblur="this.style.backgroundColor = \'#ffffff\';" /></div>';
-        //     from_htmls[number] += '<div class="gmapDirBtns" id="gmapDirBtnsFrom" style="margin-top:10px;"><input value="' + labels._button + '" type="submit" class="gmapDirButton" id="gmapDirButtonFrom" /></div>';
-        //     from_htmls[number] += '<input type="hidden" name="daddr" value="' + formatAddressForMaps(address) + '" /><br></form>';
-        //     from_htmls[number] += '</div>';
+        // html = [
+        //     '<div class="gmapAddr" style="white-space: nowrap; margin-right: 15px">',
+        //     getInfoicon(address.logourl),
+        //     '<div><strong>', address.name, '</strong><br>',
+        //     address.street, '<br> ' , address.zip,' ',address.city,
+        //     '</div></div>'
+        // ].join('');
+        //
+        // // Directions
+        // html = html + '<div class="gmapDirLink"><a target="_blank" href="https://maps.google.com/?daddr=' + formatAddressForMaps(address) + '">' + labels.directions + '</a></div>';
 
-        //     html = html + '<div class="gmapDirHead" class="gmapDir" style="white-space: nowrap; clear:both; margin-top:10px;">' + labels.caclulate + ': <a href="javascript:tohere(' + number + ')">' + labels.to + '</a> - <a href="javascript:fromhere(' + number + ')">' + labels.from + '</a></div><br>';
-        // } else {
-            html = html + '<div><a target="_blank" href="https://maps.google.com/?daddr=' + formatAddressForMaps(address) + '">' + labels.directions + '</a></div>';
-        // }
+        // Directions-Link
+        var directions_html = [
+            '<div class="gmapDirLink">',
+            '<a target="_blank" href="https://maps.google.com/?daddr=' + formatAddressForMaps(address) + '">',
+            labels.directions,
+            '</a></div>'
+        ].join('');
+
+
+        // Address
+        var address_html = [
+            getInfoicon(address.logourl),
+            '<div class="gmapAddressText">',
+                '<strong>', address.name, '</strong><br>',
+                address.street,
+                '<br> ' ,
+                address.zip,' ',address.city,
+                directions_html,
+            '</div>'
+        ].join('');
+
+
+        // Wrapper
+        html = [
+            '<div class="gmapAddr" style="display: flex; white-space: nowrap; margin-right: 15px">',
+            address_html,
+            '</div>'
+        ].join('');
+
 
         gmarkers[number] = marker;
         htmls[number] = html;
@@ -200,7 +218,9 @@ function initSimpleGoogleMap(mapContentOptions, mapCustomOptions) {
     //function openFirstMarker() {
     var openFirstMarker = function() {
         if (openInfoWindow == 'first') {
-            infowindow = new google.maps.InfoWindow({content: htmls[0]});
+            infowindow = new google.maps.InfoWindow({
+                content: htmls[0]
+            });
             infowindow.open(map,gmarkers[0]);
             // if zoomToBounds: zoom out a little bit, so all markers are still inside the map bounds after opening the infowindow
             if (zoomToBounds == true && addresses.length) {map.setZoom(map.getZoom()-1)};
