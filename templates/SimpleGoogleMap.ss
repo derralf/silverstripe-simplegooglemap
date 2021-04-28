@@ -1,5 +1,5 @@
 <% if $gmap_has_addresses %>
-<div id="$gmap_id" style="width:$width;height:$height;" class="gmap display">
+<div id="$gmap_id" style="width:$width;height:$height;" class="gmap display {$additionalClassNames}">
     <% if not $gmap_is_allowed %>
     <div class="confirm-googlemaps" style="background:#DDD;border:#666;padding:20px;text-align:center;">
         <div class="well text-center">

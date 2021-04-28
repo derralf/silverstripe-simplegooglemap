@@ -65,6 +65,29 @@ function initSimpleGoogleMap(mapContentOptions, mapCustomOptions) {
     // center berechnen
     var mapCenter = new google.maps.LatLng(addresses[0].lat,addresses[0].lng);
 
+    // map default styles
+    var mapDefaultStyles = [
+        {"featureType":"poi","stylers":[{"visibility":"off"}]},
+        {"featureType":"poi.attraction","stylers":[{"visibility":"on"}]},
+        {"featureType":"poi.park","stylers":[{"visibility":"on"}]}
+    ];
+
+    // map custom styles
+    if (typeof(simplegooglemapcustomstyles) != 'undefined' && simplegooglemapcustomstyles != null) {
+        var mapCustomStyles = simplegooglemapcustomstyles;
+    } else {
+        var mapCustomStyles = [];
+    }
+
+    // merge styles
+    var mapStyles = mapDefaultStyles.concat(mapCustomStyles);
+
+    // test
+    // console.dir(simplegooglemapcustomstyles);
+    // console.dir(mapDefaultStyles);
+    // console.dir(mapStyles);
+    
+
     // default map settings
     var mapDefaultOptions = {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -74,7 +97,10 @@ function initSimpleGoogleMap(mapContentOptions, mapCustomOptions) {
         scrollwheel: false,
         mapTypeControl: false,
         streetViewControl: false,
+        styles: mapStyles
     };
+
+
 
     // map settings: merge defaults and custum settings
     var mapOptions = $.extend({}, mapDefaultOptions, mapCustomOptions || {});

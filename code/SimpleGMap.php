@@ -18,7 +18,7 @@ use SilverStripe\View\ViewableData;
  */
 class SimpleGMap extends ViewableData {
 
-    function __construct($name='default', $zoomLevel = 5, $width = 600, $height = 500, $openInfoWindow = 'first',$zoomToBounds = false, $addressList = 'Adresses') {
+    function __construct($name='default', $zoomLevel = 5, $width = 600, $height = 500, $openInfoWindow = 'first',$zoomToBounds = false, $addressList = 'Adresses', $additionalClassNames='') {
 		$this->name = $name;
 		$this->zoomLevel = $zoomLevel;
 		$this->width = $width;
@@ -27,6 +27,7 @@ class SimpleGMap extends ViewableData {
 		$this->zoomToBounds = ($zoomToBounds) ? $zoomToBounds : 0;
 		$this->baseFolder = Director::baseURL();
         $this->addressList = $addressList;
+        $this->additionalClassNames = $additionalClassNames;
 	}
 
     function display() {
@@ -78,12 +79,13 @@ class SimpleGMap extends ViewableData {
             'gmap_has_addresses'   => $gmap_has_addresses,
             'gmap_addresses'       => json_encode($map_addresses),
             'gmap_id'              => $this->name . '_SimpleGMap',
-            'width'                => $this->width . 'px',
-            'height'               => $this->height . 'px',
+            'width'                => (is_numeric($this->width))  ? $this->width  . 'px' : $this->width,
+            'height'               => (is_numeric($this->height)) ? $this->height . 'px' : $this->height,
             'gmap_zoomLevel'       => $this->zoomLevel,
             'gmap_openInfoWindow'  => $this->openInfoWindow,
             'gmap_zoomToBounds'    => $this->zoomToBounds,
             'gmap_useToFromInputs' => $this->useToFromInputs,
+            'additionalClassNames' => $this->additionalClassNames
         ]);
 
         $map = $map_vars->renderWith('SimpleGoogleMap');
