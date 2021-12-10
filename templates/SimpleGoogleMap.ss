@@ -12,9 +12,9 @@
 <script type="text/javascript">
     var {$gmap_id}_gmap_addresses = $gmap_addresses.RAW;
 
-    <% if not $gmap_use_consenting_cookie %>
-        gmap_is_allowed = true;
-    <% end_if %>
+    <%-- just in case the map-config-JS is loaded before this: set gmap_is_allowed true if config is set to not use the consent cookie --%>
+    var gmap_use_consenting_cookie = {$gmap_use_consenting_cookie};
+    <% if not $gmap_use_consenting_cookie %> var gmap_is_allowed = true;<% end_if %>
 
     var {$gmap_id}_MapContent = {
         gmap_id: "{$gmap_id}",

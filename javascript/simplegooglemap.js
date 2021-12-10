@@ -10,6 +10,12 @@ function gmap_allow() {
 
 // get cookie / set allowed variable
 function set_gmap_is_allowed() {
+    // check config
+    if (typeof(gmap_use_consenting_cookie) != 'undefined' && gmap_use_consenting_cookie == false) {
+        gmap_is_allowed = true;
+        return;
+    }
+    // check cookie
     var name = "ss_googlemaps_allow=";
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
@@ -86,7 +92,7 @@ function initSimpleGoogleMap(mapContentOptions, mapCustomOptions) {
     // console.dir(simplegooglemapcustomstyles);
     // console.dir(mapDefaultStyles);
     // console.dir(mapStyles);
-    
+
 
     // default map settings
     var mapDefaultOptions = {
