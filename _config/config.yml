@@ -7,6 +7,7 @@ Derralf\SimpleGoogleMap\SimpleGMap:
   include_i18n_js: true
   include_i18n_module_js: true
   include_module_js: true
+  use_consenting_cookie: true
 #  google_maps_api_version: '3.36'
 #  google_maps_api_key: '123'
 #  Adresses:

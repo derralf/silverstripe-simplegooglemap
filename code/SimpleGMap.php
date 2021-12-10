@@ -30,9 +30,15 @@ class SimpleGMap extends ViewableData {
         $this->additionalClassNames = $additionalClassNames;
 	}
 
+
     function display() {
 
+        $gmap_use_consenting_cookie = ($this->config()->get('use_consenting_cookie')) ? 1 : 0;
+
+        // check cookie
         $gmap_is_allowed = (isset($_COOKIE["ss_googlemaps_allow"])) ? true : false;
+        // if config is set to not use cookie: set allowed to true
+        $gmap_is_allowed = ($gmap_use_consenting_cookie) ? $gmap_is_allowed : true;
 
         $map_addresses = $this->config()->get($this->addressList);
         $gmap_has_addresses = ($map_addresses) ? true : false;
@@ -74,18 +80,19 @@ class SimpleGMap extends ViewableData {
 
 
         $map_vars = new ArrayData([
-            'gmap_is_allowed'      => $gmap_is_allowed,
-            'gmap_api_url'         => $api_url,
-            'gmap_has_addresses'   => $gmap_has_addresses,
-            'gmap_addresses'       => json_encode($map_addresses),
-            'gmap_id'              => $this->name . '_SimpleGMap',
-            'width'                => (is_numeric($this->width))  ? $this->width  . 'px' : $this->width,
-            'height'               => (is_numeric($this->height)) ? $this->height . 'px' : $this->height,
-            'gmap_zoomLevel'       => $this->zoomLevel,
-            'gmap_openInfoWindow'  => $this->openInfoWindow,
-            'gmap_zoomToBounds'    => $this->zoomToBounds,
-            'gmap_useToFromInputs' => $this->useToFromInputs,
-            'additionalClassNames' => $this->additionalClassNames
+            'gmap_is_allowed'            => $gmap_is_allowed,
+            'gmap_use_consenting_cookie' => $gmap_use_consenting_cookie,
+            'gmap_api_url'               => $api_url,
+            'gmap_has_addresses'         => $gmap_has_addresses,
+            'gmap_addresses'             => json_encode($map_addresses),
+            'gmap_id'                    => $this->name . '_SimpleGMap',
+            'width'                      => (is_numeric($this->width)) ? $this->width . 'px' : $this->width,
+            'height'                     => (is_numeric($this->height)) ? $this->height . 'px' : $this->height,
+            'gmap_zoomLevel'             => $this->zoomLevel,
+            'gmap_openInfoWindow'        => $this->openInfoWindow,
+            'gmap_zoomToBounds'          => $this->zoomToBounds,
+            'gmap_useToFromInputs'       => $this->useToFromInputs,
+            'additionalClassNames'       => $this->additionalClassNames
         ]);
 
         $map = $map_vars->renderWith('SimpleGoogleMap');

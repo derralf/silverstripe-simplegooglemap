@@ -12,6 +12,10 @@
 <script type="text/javascript">
     var {$gmap_id}_gmap_addresses = $gmap_addresses.RAW;
 
+    <% if not $gmap_use_consenting_cookie %>
+        gmap_is_allowed = true;
+    <% end_if %>
+
     var {$gmap_id}_MapContent = {
         gmap_id: "{$gmap_id}",
         addresses: {$gmap_id}_gmap_addresses,
@@ -29,7 +33,6 @@
         confirmGoogleMaps({$gmap_id}_MapContent, {$gmap_id}_MapCustomOptions, "{$gmap_api_url.RAW}");
     });
     <% end_if %>
-
 
 </script>
 <% else %>
