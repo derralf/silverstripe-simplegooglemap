@@ -175,7 +175,9 @@ function initSimpleGoogleMap(mapContentOptions, mapCustomOptions) {
 
         // Address
         var address_html = [
-            getInfoicon(address.logourl),
+            '<div className"gmapAddressIcon">',
+                getInfoicon(address.logourl),
+            '</div>',
             '<div class="gmapAddressText">',
                 '<strong>', address.name, '</strong><br>',
                 address.street,
@@ -228,7 +230,7 @@ function initSimpleGoogleMap(mapContentOptions, mapCustomOptions) {
     function getInfoicon(url) {
         // var url = url zum Icon
         if (url) {
-            var inconhtml = "<img src=\""+url+"\" width=\"28\" height=\"40\" border=\"0\" alt=\"\" title=\"\" align=\"left\" style=\"margin-right:10px;\"/>";
+            var inconhtml = "<img src=\""+url+"\" width=\"28\" border=\"0\" alt=\"\" title=\"\" align=\"left\" style=\"margin-right:10px;width:28px;height:auto;\"/>";
         } else {
             var inconhtml = "";
         }
